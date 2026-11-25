@@ -142,6 +142,7 @@ function renderPost(slug) {
 function route() {
   const m = location.hash.match(/^#\/([a-z0-9-]+)$/);
   const list = $("#listView"), post = $("#postView"), intro = document.querySelector(".blog-intro");
+  document.documentElement.classList.toggle("is-post", !!m);
   if (m) {
     list.hidden = true;
     post.hidden = false;

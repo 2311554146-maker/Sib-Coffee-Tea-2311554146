@@ -191,3 +191,6 @@ main:focus { outline: none; }
 .cookie-actions .btn { padding: 9px 20px; }
 .link-btn { padding: 0; border: 0; background: none; color: inherit; font-size: .85rem; text-decoration: underline; }
 .link-btn:hover { color: #ffb454; }
+
+/* Mở thẳng một bài: ẩn sẵn phần danh sách (đặt bởi blog-init.js) để không nhảy bố cục */
+.is-post .blog-intro, .is-post #listView { display: none !important; }

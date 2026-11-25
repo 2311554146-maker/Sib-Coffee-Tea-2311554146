@@ -274,20 +274,27 @@ async function saveOrder(order) {
   const { fs, db } = await loadFirebase();
   const ref = fs.doc(db, "donhang", order.maDon);
   const data = Object.assign({}, order, { thoiGian: fs.serverTimestamp() });
+  const write = fs.setDoc(ref, data);
+  write.catch(() => { /* lỗi được xử lý ở Promise.race bên dưới; tránh báo lỗi trùng nếu ghi hỏng sau khi hết giờ */ });
   let timer;
   const timeout = new Promise((_, reject) => {
     timer = setTimeout(() => reject({ code: "timeout" }), SEND_TIMEOUT_MS);
   });
   try {
-    await Promise.race([fs.setDoc(ref, data), timeout]);
+    await Promise.race([write, timeout]);
   } catch (err) {
-    // Hủy kết nối để mọi lần ghi còn treo không tự gửi lại sau này
-    try { await fs.terminate(db); } catch (e) { /* bỏ qua */ }
-    firebasePromise = null;
+    resetFirebase(fs, db);
     throw err;
   } finally {
     clearTimeout(timer);
   }
+}
+
+/* Hủy kết nối để lần ghi còn treo không tự gửi lại về sau.
+   Không chờ kết quả (terminate có thể treo khi mất mạng), lần đặt hàng sau sẽ nạp kết nối mới. */
+function resetFirebase(fs, db) {
+  firebasePromise = null;
+  try { fs.terminate(db).catch(() => {}); } catch (e) { /* bỏ qua */ }
 }
 
 function buildOrder(code, name, phone, address, note) {
