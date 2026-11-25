@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sib-coffee-and-tea.vercel.app/sitemap.xml
