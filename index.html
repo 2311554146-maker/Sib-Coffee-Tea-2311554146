@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sib Coffee and Tea – Cà phê hạt & dụng cụ pha chế</title>
+<meta name="description" content="Sib Coffee and Tea: cà phê hạt rang mới và dụng cụ pha chế tại TP.HCM. Thanh toán khi nhận hàng (COD). Website thực hành – không bán hàng thật.">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="practice-bar" role="note">⚠ <span>Website thực hành – không bán hàng thật</span></div>
+
+<header class="site-header">
+  <div class="container head-row">
+    <a class="logo" href="#top" aria-label="Sib Coffee and Tea – trang chủ">Sib <i>Coffee and Tea</i></a>
+    <nav class="main-nav" aria-label="Menu chính">
+      <ul>
+        <li><a href="#san-pham">Sản phẩm</a></li>
+        <li><a href="#chinh-sach">Chính sách</a></li>
+        <li><a href="#lien-he">Liên hệ</a></li>
+      </ul>
+    </nav>
+    <button class="cart-btn" id="openCart" type="button" aria-label="Mở giỏ hàng">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+      <span class="label">Giỏ hàng</span>
+      <span class="cart-count" id="cartCount" aria-live="polite">0</span>
+    </button>
+  </div>
+</header>
+
+<main id="top">
+  <div class="hero">
+    <div class="container">
+      <div>
+        <span class="tag">KHUYẾN MÃI THÁNG NÀY</span>
+        <h1>Hạt rang mới mỗi tuần,<br>giảm đến 20%</h1>
+        <p>Cà phê Arabica Cầu Đất, Robusta Buôn Ma Thuột và bộ dụng cụ pha chế cho góc bếp nhà bạn. Miễn phí giao hàng cho đơn từ 300.000đ.</p>
+        <a class="btn" href="#san-pham">Mua ngay</a>
+      </div>
+      <div class="hero-art" aria-hidden="true">☕</div>
+    </div>
+  </div>
+
+  <div class="container perks">
+    <div class="perk"><b>🚚 Giao nhanh nội thành</b>1–2 ngày tại TP.HCM</div>
+    <div class="perk"><b>💵 Thanh toán khi nhận hàng</b>Kiểm tra hàng rồi mới trả tiền</div>
+    <div class="perk"><b>🔥 Rang mới trong tuần</b>Hạt thơm, đóng gói van một chiều</div>
+    <div class="perk"><b>↩ Đổi trả 7 ngày</b>Nếu sản phẩm lỗi</div>
+  </div>
+
+  <section id="san-pham">
+    <div class="container">
+      <h2>Sản phẩm</h2>
+      <p class="sub">Chọn món bạn thích, thêm vào giỏ và đặt hàng chỉ trong vài bước.</p>
+      <div class="filters" role="group" aria-label="Lọc sản phẩm theo nhóm">
+        <button type="button" class="chip" data-filter="all" aria-pressed="true">Tất cả</button>
+        <button type="button" class="chip" data-filter="hat" aria-pressed="false">Cà phê hạt</button>
+        <button type="button" class="chip" data-filter="dungcu" aria-pressed="false">Dụng cụ pha chế</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </div>
+  </section>
+
+  <section id="chinh-sach">
+    <div class="container">
+      <h2>Chính sách</h2>
+      <p class="sub">Rõ ràng, dễ hiểu để bạn yên tâm đặt hàng.</p>
+      <div class="policies">
+        <div class="policy"><h3>🚚 Giao hàng</h3><p>Nội thành TP.HCM giao trong 1–2 ngày. Phí giao hàng 25.000đ, miễn phí cho đơn từ 300.000đ.</p></div>
+        <div class="policy"><h3>↩ Đổi trả trong 7 ngày</h3><p>Đổi trả trong 7 ngày kể từ khi nhận hàng nếu sản phẩm lỗi hoặc giao sai. Hạt cà phê đã mở túi không áp dụng.</p></div>
+        <div class="policy"><h3>💵 Thanh toán COD</h3><p>Bạn trả tiền mặt cho nhân viên giao hàng khi nhận và kiểm tra hàng. Không có thanh toán online.</p></div>
+        <div class="policy"><h3>🔒 Thông tin của bạn</h3><p>Trang thực hành này không lưu hay gửi thông tin đặt hàng đi đâu.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="lien-he">
+    <div class="container">
+      <h2>Liên hệ</h2>
+      <div class="contact">
+        <div><b>Sib Coffee and Tea</b> – TP. Hồ Chí Minh</div>
+        <div>Điện thoại: 0900 000 000 <span class="note">(số minh họa)</span></div>
+        <div>Email: hello@example.com <span class="note">(địa chỉ minh họa)</span></div>
+        <div>Giờ làm việc: 8:00 – 20:00, Thứ Hai – Chủ Nhật</div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>© 2026 Sib Coffee and Tea. <strong>Website thực hành – không bán hàng thật.</strong></div>
+    <div>Mọi sản phẩm, giá, địa chỉ và số điện thoại trên trang này chỉ là dữ liệu mẫu.</div>
+  </div>
+</footer>
+
+<!-- Giỏ hàng -->
+<div class="overlay" id="overlay"></div>
+<aside class="drawer" id="drawer" aria-label="Giỏ hàng" aria-hidden="true">
+  <div class="drawer-head">
+    <h2>Giỏ hàng</h2>
+    <button type="button" class="icon-btn" id="closeCart" aria-label="Đóng giỏ hàng">×</button>
+  </div>
+  <div class="drawer-body" id="cartBody"></div>
+  <div class="sum">
+    <div class="row"><span>Tạm tính</span><span id="sSub">0đ</span></div>
+    <div class="row"><span>Phí giao hàng</span><span id="sShip">0đ</span></div>
+    <div class="row total"><span>Tổng tiền</span><span id="sTotal">0đ</span></div>
+    <div class="note" id="shipNote"></div>
+    <button type="button" class="btn" id="checkoutBtn">Đặt hàng (COD)</button>
+  </div>
+</aside>
+
+<!-- Form đặt hàng -->
+<dialog id="checkout" aria-labelledby="coTitle">
+  <form class="dlg" id="form" novalidate>
+    <h2 id="coTitle">Thông tin giao hàng</h2>
+    <div class="warn">Website thực hành – không bán hàng thật. Vui lòng KHÔNG nhập thông tin cá nhân thật.</div>
+
+    <label class="field-label" for="fName">Họ và tên</label>
+    <input type="text" id="fName" autocomplete="off">
+    <div class="err" id="eName"></div>
+
+    <label class="field-label" for="fPhone">Số điện thoại</label>
+    <input type="tel" id="fPhone" inputmode="tel" autocomplete="off" placeholder="Ví dụ: 0900000000">
+    <div class="err" id="ePhone"></div>
+
+    <label class="field-label" for="fAddr">Địa chỉ giao hàng</label>
+    <textarea id="fAddr" rows="2" autocomplete="off"></textarea>
+    <div class="err" id="eAddr"></div>
+
+    <label class="field-label" for="fNote">Ghi chú (không bắt buộc)</label>
+    <input type="text" id="fNote" autocomplete="off">
+
+    <fieldset class="pay">
+      <legend>Phương thức thanh toán</legend>
+      <label class="radio"><input type="radio" name="pay" value="cod" checked>
+        <span><b>Thanh toán khi nhận hàng (COD)</b><br><small>Trả tiền mặt cho nhân viên giao hàng. Hiện chỉ hỗ trợ COD.</small></span></label>
+      <div class="paytotal">Tổng tiền: <b id="coTotal">0đ</b></div>
+    </fieldset>
+
+    <label class="check" for="fConsent">
+      <input type="checkbox" id="fConsent">
+      <span>Tôi đồng ý cho cửa hàng dùng thông tin này để giao hàng.</span>
+    </label>
+    <div class="err" id="eConsent"></div>
+
+    <div class="actions">
+      <button type="button" class="btn ghost" id="coCancel">Quay lại</button>
+      <button type="submit" class="btn">Xác nhận đặt hàng</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Cảm ơn -->
+<dialog id="done" aria-labelledby="doneTitle">
+  <div class="dlg">
+    <h2 id="doneTitle">🎉 Cảm ơn bạn đã đặt hàng!</h2>
+    <p>Mã đơn hàng của bạn: <b id="orderId"></b></p>
+    <p>Đây là website thực hành nên đơn hàng <b>không được xử lý</b> và không có hàng nào được giao. Không có dữ liệu nào được gửi đi.</p>
+    <div class="actions"><button type="button" class="btn" id="doneClose">Tiếp tục xem sản phẩm</button></div>
+  </div>
+</dialog>
+
+<div class="toast" id="toast" role="status"></div>
+
+<script src="products.js"></script>
+<script src="script.js"></script>
+</body>
+</html>

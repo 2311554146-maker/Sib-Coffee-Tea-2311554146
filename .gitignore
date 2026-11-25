@@ -1,0 +1,19 @@
+# Vercel (liên kết dự án và token tạm)
+.vercel
+.env*
+
+# Claude Code
+.claude/
+
+# Hệ điều hành
+Thumbs.db
+desktop.ini
+.DS_Store
+
+# Trình soạn thảo
+.vscode/
+.idea/
+
+# Khác
+node_modules/
+*.log
