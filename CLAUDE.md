@@ -17,6 +17,7 @@ Mọi chữ hiển thị cho khách và mọi giải thích cho người dùng p
 | `products.js`, `script.js` | Danh sách 8 sản phẩm; lọc, giỏ hàng (localStorage), đặt hàng COD, ghi đơn vào Firestore |
 | `blog.html`, `blog.js`, `blog-init.js`, `posts.js` | Blog, địa chỉ bài dạng `blog.html#/ten-bai` |
 | `analytics.js` | Biểu ngữ cookie; chỉ nạp Google Analytics sau khi khách bấm "Đồng ý" |
+| `trich-dan.js`, `anh/` | Mỗi lần vào hoặc tải lại trang chủ hiện ngẫu nhiên 1 trong 8 ảnh trích dẫn về cà phê (khác ảnh lần trước). Thêm ảnh: bỏ tệp vào `anh/` rồi thêm một dòng vào danh sách `QUOTES` (kèm chữ mô tả `alt`) |
 | `firestore.rules`, `firebase.json` | Quy tắc Firestore (asia-southeast1) |
 | `vercel.json` | Header bảo mật |
 | `sitemap.xml`, `robots.txt`, `google*.html` | SEO và xác minh Search Console |

@@ -198,3 +198,10 @@ main:focus { outline: none; }
 
 /* Mở thẳng một bài: ẩn sẵn phần danh sách (đặt bởi blog-init.js) để không nhảy bố cục */
 .is-post .blog-intro, .is-post #listView { display: none !important; }
+
+/* ---------- Ảnh trích dẫn ngẫu nhiên khi vào trang ---------- */
+.quote-dlg { width: auto; max-width: min(94vw, 900px); max-height: 92vh; overflow: visible; background: transparent; border-radius: 0; box-shadow: none; }
+.quote-dlg::backdrop { background: rgba(0, 0, 0, .72); }
+.quote-dlg img { display: block; width: auto; height: auto; max-width: 100%; max-height: 88vh; margin: 0 auto; border-radius: 12px; cursor: pointer; }
+.quote-close { position: absolute; top: 10px; right: 10px; width: 40px; height: 40px; border: 2px solid #fff; border-radius: 50%; background: #1f140d; color: #fff; font-size: 1.5rem; line-height: 1; }
+.quote-close:hover { background: #3e2417; }
