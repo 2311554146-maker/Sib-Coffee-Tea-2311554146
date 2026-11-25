@@ -8,7 +8,7 @@
   var QUOTES = [
     { src: "anh/menendez-pelayo.webp", alt: "\"Thế hệ tạo nên sự đổi mới của Tây Ban Nha được hình thành trong quán cà phê và các tổ chức giáo dục tự do.\" Triết gia Marcelino Menéndez Pelayo (1856 - 1912)" },
     { src: "anh/goldoni.webp", alt: "\"Một khi cà phê thịnh hành, tinh thần được đánh thức, mọi người đều cố gắng trở thành người văn minh hơn.\" Carlo Goldoni (1707 - 1793)" },
-    { src: "anh/beethoven.png", alt: "\"Tôi có thói quen lựa chọn đủ 60 hạt cà phê để pha một tách Moka.\" Thiên tài âm nhạc Ludwig Van Beethoven (1770 - 1827)" },
+    { src: "anh/beethoven.webp", alt: "\"Tôi có thói quen lựa chọn đủ 60 hạt cà phê để pha một tách Moka.\" Thiên tài âm nhạc Ludwig Van Beethoven (1770 - 1827)" },
     { src: "anh/polgar.webp", alt: "\"Bạn có thể đến quán cà phê nếu muốn ở một mình nhưng vẫn cần kết nối xã hội.\" Nhà phê bình Alfred Polgar (1873 - 1955)" },
     { src: "anh/balzac.png", alt: "\"Khi tôi uống cà phê, các ý tưởng xuất hiện như đi diễu hành trong quân đội.\" Honoré de Balzac" },
     { src: "anh/verri.webp", alt: "\"Cà phê tái tạo tâm hồn, đánh thức tâm trí và đặc biệt hữu ích cho những nhà tư tưởng và những người nghiên cứu khoa học.\" Triết gia người Ý Pietro Verri (1728 - 1797)" },
