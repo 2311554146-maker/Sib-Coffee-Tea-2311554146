@@ -108,6 +108,12 @@
   <div class="drawer-body" id="cartBody"></div>
   <div class="sum">
     <div class="row"><span>Tạm tính</span><span id="sSub">0đ</span></div>
+    <div class="coupon">
+      <input type="text" id="couponInput" maxlength="20" autocomplete="off" placeholder="Mã giảm giá" aria-label="Mã giảm giá">
+      <button type="button" class="btn ghost" id="couponBtn">Áp dụng</button>
+    </div>
+    <div class="note" id="couponMsg" role="status"></div>
+    <div class="row" id="rowDiscount" hidden><span>Giảm giá</span><span id="sDiscount">0đ</span></div>
     <div class="row"><span>Phí giao hàng</span><span id="sShip">0đ</span></div>
     <div class="row total"><span>Tổng tiền</span><span id="sTotal">0đ</span></div>
     <div class="note" id="shipNote"></div>

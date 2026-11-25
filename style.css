@@ -120,6 +120,10 @@ h2 { margin: 0 0 6px; font-family: var(--font-logo); font-size: 1.9rem; color: v
 .sum .row { display: flex; justify-content: space-between; margin: 3px 0; }
 .sum .total { font-size: 1.15rem; font-weight: 700; color: var(--brand); }
 .sum .btn { width: 100%; margin-top: 10px; }
+.coupon { display: flex; gap: 8px; margin-bottom: 6px; }
+.coupon input { flex: 1; min-width: 0; width: auto; }
+.coupon .btn { width: auto; margin-top: 0; padding: 8px 16px; white-space: nowrap; }
+.sum .row[hidden] { display: none; }
 
 /* Form đặt hàng */
 dialog { width: min(520px, calc(100% - 24px)); max-height: 92vh; padding: 0; border: 0; border-radius: 18px; background: var(--surface); color: var(--ink); box-shadow: var(--shadow); }

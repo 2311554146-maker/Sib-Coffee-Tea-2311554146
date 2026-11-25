@@ -36,6 +36,11 @@ Mọi chữ hiển thị cho khách và mọi giải thích cho người dùng p
 - **Hằng số phí giao nằm ở HAI nơi và phải luôn khớp:** `FREE_SHIP_FROM = 300000`, `SHIP_FEE = 25000`
   trong `script.js`, và hai con số 300000 và 25000 trong `firestore.rules`. Đổi một bên mà quên bên kia
   thì mọi đơn sẽ bị từ chối. Sau khi đổi Rules: `firebase deploy --only firestore:rules --dry-run` rồi thử một đơn dưới và một đơn trên 300.000đ.
+- **Mã giảm giá cũng nằm ở HAI nơi và phải khớp:** `COUPON_CODE = "SIB10"` và `COUPON_PCT = 10` trong `script.js`,
+  và mã `'SIB10'` cùng công thức `math.floor(tamTinh * 10 / 100)` trong `firestore.rules`. Phí giao tính trên tạm tính
+  TRƯỚC giảm giá. Đơn phải có đủ hai trường `maGiamGia` và `giamGia` (đơn kiểu cũ bị Rules từ chối),
+  nên khi đổi Rules và trang phải triển khai gần như cùng lúc.
+- Bộ thử Rules trên trình giả lập (cần JDK 21): `firebase emulators:exec --only firestore --project demo-rules-test "node <rules-tests.js>"`.
 - Rules do skill `firebase:firestore-rules-creation` hướng dẫn viết (tác tử `firestore-rules-author` không chạy được ở môi trường này).
 - Mỗi lần đặt thử đơn là ghi một tài liệu giả vào Firestore thật: chỉ làm khi cần và nói rõ cho người dùng.
 - Xóa dự án, đổi quyền, cấp quyền OAuth, bấm "Start free trial" hay gắn thanh toán: luôn hỏi trước.

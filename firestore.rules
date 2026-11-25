@@ -63,8 +63,8 @@ service cloud.firestore {
     }
 
     function donHangHopLe(d, maTaiLieu) {
-      return d.keys().hasOnly(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
-        && d.keys().hasAll(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
+      return d.keys().hasOnly(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'maGiamGia', 'giamGia', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
+        && d.keys().hasAll(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'maGiamGia', 'giamGia', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
         && d.maDon is string && d.maDon == maTaiLieu
         && d.maDon.matches('^SIB-[A-Z0-9]{8}$')
         && khachHangHopLe(d.khachHang)
@@ -76,7 +76,12 @@ service cloud.firestore {
         // Hai con số này PHẢI khớp FREE_SHIP_FROM và SHIP_FEE trong script.js;
         // đổi một bên thì phải đổi bên kia, nếu không đơn hàng sẽ bị từ chối.
         && ((d.tamTinh >= 300000 && d.phiGiao == 0) || (d.tamTinh < 300000 && d.phiGiao == 25000))
-        && d.tongTien == d.tamTinh + d.phiGiao
+        // Mã giảm giá: '' (không dùng) hoặc 'SIB10' (giảm 10% tạm tính, làm tròn xuống).
+        // Phải khớp COUPON_CODE và COUPON_PCT trong script.js.
+        && laSoNguyenKhongAm(d.giamGia)
+        && ((d.maGiamGia == '' && d.giamGia == 0)
+            || (d.maGiamGia == 'SIB10' && d.giamGia == math.floor(d.tamTinh * 10 / 100)))
+        && d.tongTien == d.tamTinh - d.giamGia + d.phiGiao
         && d.thanhToan == 'COD'
         && d.trangThai == 'moi'
         && d.thoiGian == request.time;

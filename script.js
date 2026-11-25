@@ -47,11 +47,19 @@ function setQty(id, qty) {
   renderCart();
 }
 
+/* Mã giảm giá: chỉ để tiện cho khách; việc chặn đơn sai giá do firestore.rules đảm nhiệm.
+   COUPON_CODE và COUPON_PCT PHẢI khớp hằng số tương ứng trong firestore.rules. */
+const COUPON_CODE = "SIB10";
+const COUPON_PCT = 10;
+let coupon = "";   // "" hoặc COUPON_CODE; chỉ giữ trong bộ nhớ, không lưu localStorage
+
 function calcTotals() {
   let subtotal = 0;
   for (const id in cart) subtotal += findProduct(id).price * cart[id];
+  const discount = coupon === COUPON_CODE ? Math.floor(subtotal * COUPON_PCT / 100) : 0;
+  // Phí giao hàng tính trên tạm tính trước giảm giá (khớp firestore.rules).
   const shipping = subtotal === 0 || subtotal >= FREE_SHIP_FROM ? 0 : SHIP_FEE;
-  return { subtotal, shipping, total: subtotal + shipping };
+  return { subtotal, discount, shipping, total: subtotal - discount + shipping };
 }
 
 /* ---------- Danh sách sản phẩm ---------- */
@@ -182,6 +190,8 @@ function renderCart() {
 
   const t = calcTotals();
   $("#sSub").textContent = formatPrice(t.subtotal);
+  $("#rowDiscount").hidden = t.discount === 0;
+  $("#sDiscount").textContent = "-" + formatPrice(t.discount);
   $("#sShip").textContent = t.subtotal === 0 ? "0đ" : (t.shipping === 0 ? "Miễn phí" : formatPrice(t.shipping));
   $("#sTotal").textContent = formatPrice(t.total);
   $("#shipNote").textContent = t.subtotal > 0 && t.subtotal < FREE_SHIP_FROM
@@ -189,6 +199,18 @@ function renderCart() {
     : "";
   $("#checkoutBtn").disabled = ids.length === 0;
 }
+
+$("#couponBtn").addEventListener("click", () => {
+  const entered = $("#couponInput").value.trim().toUpperCase();
+  if (entered === COUPON_CODE) {
+    coupon = COUPON_CODE;
+    $("#couponMsg").textContent = "Đã áp dụng mã " + COUPON_CODE + " (giảm " + COUPON_PCT + "%).";
+  } else {
+    coupon = "";
+    $("#couponMsg").textContent = entered === "" ? "" : "Mã giảm giá không hợp lệ.";
+  }
+  renderCart();
+});
 
 /* ---------- Mở / đóng giỏ hàng ---------- */
 let lastFocus = null;
@@ -307,6 +329,8 @@ function buildOrder(code, name, phone, address, note) {
       return { ma: String(p.id), ten: p.name, gia: p.price, soLuong: cart[id] };
     }),
     tamTinh: t.subtotal,
+    maGiamGia: coupon,
+    giamGia: t.discount,
     phiGiao: t.shipping,
     tongTien: t.total,
     thanhToan: "COD",
@@ -379,6 +403,9 @@ $("#form").addEventListener("submit", async (e) => {
 
   $("#orderId").textContent = code;
   cart = {};
+  coupon = "";
+  $("#couponInput").value = "";
+  $("#couponMsg").textContent = "";
   saveCart();
   renderCart();
   $("#form").reset();
