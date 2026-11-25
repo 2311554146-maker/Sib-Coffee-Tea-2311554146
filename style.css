@@ -183,3 +183,11 @@ a.cart-btn { text-decoration: none; }
 main:focus { outline: none; }
 .post-card h2 { margin: 0; font-size: 1rem; line-height: 1.35; font-family: var(--font); color: var(--ink); }
 .blog-main { min-height: 100vh; }   /* giữ chỗ để chân trang không nhảy khi danh sách bài được dựng */
+
+/* ---------- Biểu ngữ cookie ---------- */
+.cookie-banner { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 130; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; max-width: 760px; margin-inline: auto; padding: 14px 16px; background: var(--surface); color: var(--ink); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); }
+.cookie-banner p { flex: 1 1 280px; margin: 0; font-size: .9rem; }
+.cookie-actions { display: flex; gap: 8px; }
+.cookie-actions .btn { padding: 9px 20px; }
+.link-btn { padding: 0; border: 0; background: none; color: inherit; font-size: .85rem; text-decoration: underline; }
+.link-btn:hover { color: #ffb454; }
