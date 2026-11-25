@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sib Coffee and Tea – Cà phê hạt & dụng cụ pha chế</title>
 <meta name="description" content="Sib Coffee and Tea: cà phê hạt rang mới và dụng cụ pha chế tại TP.HCM. Thanh toán khi nhận hàng (COD). Website thực hành – không bán hàng thật.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%98%95%3C/text%3E%3C/svg%3E">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -21,7 +22,7 @@
         <li><a href="#lien-he">Liên hệ</a></li>
       </ul>
     </nav>
-    <button class="cart-btn" id="openCart" type="button" aria-label="Mở giỏ hàng">
+    <button class="cart-btn" id="openCart" type="button" aria-label="Giỏ hàng 0 sản phẩm">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
       <span class="label">Giỏ hàng</span>
       <span class="cart-count" id="cartCount" aria-live="polite">0</span>
@@ -119,16 +120,16 @@
     <div class="warn">Website thực hành – không bán hàng thật. Vui lòng KHÔNG nhập thông tin cá nhân thật.</div>
 
     <label class="field-label" for="fName">Họ và tên</label>
-    <input type="text" id="fName" autocomplete="off">
-    <div class="err" id="eName"></div>
+    <input type="text" id="fName" autocomplete="off" aria-describedby="eName">
+    <div class="err" id="eName" role="alert"></div>
 
     <label class="field-label" for="fPhone">Số điện thoại</label>
-    <input type="tel" id="fPhone" inputmode="tel" autocomplete="off" placeholder="Ví dụ: 0900000000">
-    <div class="err" id="ePhone"></div>
+    <input type="tel" id="fPhone" inputmode="tel" autocomplete="off" placeholder="Ví dụ: 0900000000" aria-describedby="ePhone">
+    <div class="err" id="ePhone" role="alert"></div>
 
     <label class="field-label" for="fAddr">Địa chỉ giao hàng</label>
-    <textarea id="fAddr" rows="2" autocomplete="off"></textarea>
-    <div class="err" id="eAddr"></div>
+    <textarea id="fAddr" rows="2" autocomplete="off" aria-describedby="eAddr"></textarea>
+    <div class="err" id="eAddr" role="alert"></div>
 
     <label class="field-label" for="fNote">Ghi chú (không bắt buộc)</label>
     <input type="text" id="fNote" autocomplete="off">
@@ -141,10 +142,10 @@
     </fieldset>
 
     <label class="check" for="fConsent">
-      <input type="checkbox" id="fConsent">
+      <input type="checkbox" id="fConsent" aria-describedby="eConsent">
       <span>Tôi đồng ý cho cửa hàng dùng thông tin này để giao hàng.</span>
     </label>
-    <div class="err" id="eConsent"></div>
+    <div class="err" id="eConsent" role="alert"></div>
 
     <div class="actions">
       <button type="button" class="btn ghost" id="coCancel">Quay lại</button>

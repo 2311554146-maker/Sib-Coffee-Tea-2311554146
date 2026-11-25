@@ -118,7 +118,9 @@ function renderCart() {
   const body = $("#cartBody");
   body.textContent = "";
   const ids = Object.keys(cart);
-  $("#cartCount").textContent = ids.reduce((sum, id) => sum + cart[id], 0);
+  const totalQty = ids.reduce((sum, id) => sum + cart[id], 0);
+  $("#cartCount").textContent = totalQty;
+  $("#openCart").setAttribute("aria-label", "Giỏ hàng " + totalQty + " sản phẩm");
 
   if (ids.length === 0) {
     const empty = document.createElement("div");
@@ -246,7 +248,12 @@ $("#form").addEventListener("submit", (e) => {
     setError("fAddr", "eAddr", address.length < 8 ? "Vui lòng nhập địa chỉ giao hàng đầy đủ." : ""),
     setError("fConsent", "eConsent", $("#fConsent").checked ? "" : "Bạn cần đồng ý để tiếp tục đặt hàng.")
   ];
-  if (!results.every(Boolean)) return;
+  if (!results.every(Boolean)) {
+    // Đưa con trỏ tới ô lỗi đầu tiên để người dùng thấy ngay (nhất là trên điện thoại)
+    const firstBad = $("#form").querySelector('[aria-invalid="true"]');
+    if (firstBad) firstBad.focus();
+    return;
+  }
 
   // Chưa gửi đơn đi đâu: chỉ hiện mã đơn, lời cảm ơn và xóa giỏ.
   $("#orderId").textContent = newOrderCode();
