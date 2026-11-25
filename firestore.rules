@@ -11,8 +11,9 @@ service cloud.firestore {
       return v is string && v.size() >= toiThieu && v.size() <= toiDa;
     }
 
-    function laSoKhongAm(v) {
-      return v is number && v >= 0 && v <= 1000000000;
+    // Tiền đồng Việt Nam là số nguyên (không nhận số thập phân), từ 0 đến 1 tỷ.
+    function laSoNguyenKhongAm(v) {
+      return v is int && v >= 0 && v <= 1000000000;
     }
 
     function monHopLe(m) {
@@ -21,7 +22,7 @@ service cloud.firestore {
         && m.keys().hasAll(['ma', 'ten', 'gia', 'soLuong'])
         && laChuoi(m.ma, 1, 40)
         && laChuoi(m.ten, 1, 120)
-        && laSoKhongAm(m.gia)
+        && laSoNguyenKhongAm(m.gia)
         && m.soLuong is int && m.soLuong >= 1 && m.soLuong <= 99;
     }
 
@@ -65,12 +66,16 @@ service cloud.firestore {
       return d.keys().hasOnly(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
         && d.keys().hasAll(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
         && d.maDon is string && d.maDon == maTaiLieu
-        && d.maDon.matches('^SIB-[A-Z0-9]{4,12}$')
+        && d.maDon.matches('^SIB-[A-Z0-9]{8}$')
         && khachHangHopLe(d.khachHang)
         && danhSachMonHopLe(d.sanPham)
-        && laSoKhongAm(d.tamTinh)
-        && laSoKhongAm(d.phiGiao)
-        && laSoKhongAm(d.tongTien)
+        && laSoNguyenKhongAm(d.tamTinh)
+        && laSoNguyenKhongAm(d.phiGiao)
+        && laSoNguyenKhongAm(d.tongTien)
+        // Phí giao hàng theo quy tắc kinh doanh: miễn phí từ 300.000đ, dưới mức đó thu 25.000đ.
+        // Hai con số này PHẢI khớp FREE_SHIP_FROM và SHIP_FEE trong script.js;
+        // đổi một bên thì phải đổi bên kia, nếu không đơn hàng sẽ bị từ chối.
+        && ((d.tamTinh >= 300000 && d.phiGiao == 0) || (d.tamTinh < 300000 && d.phiGiao == 25000))
         && d.tongTien == d.tamTinh + d.phiGiao
         && d.thanhToan == 'COD'
         && d.trangThai == 'moi'
