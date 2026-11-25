@@ -389,5 +389,10 @@ function showToast(message) {
   toastTimer = setTimeout(() => t.classList.remove("show"), 1800);
 }
 
-renderProducts("all");
+/* Từ blog sang: ?loc=hat|dungcu để lọc sẵn nhóm, #gio-hang để mở sẵn giỏ hàng */
+const startFilter = new URLSearchParams(location.search).get("loc");
+const validFilter = ["hat", "dungcu"].includes(startFilter) ? startFilter : "all";
+renderProducts(validFilter);
+document.querySelectorAll(".chip").forEach((c) => c.setAttribute("aria-pressed", String(c.dataset.filter === validFilter)));
 renderCart();
+if (location.hash === "#gio-hang") openCart();

@@ -144,3 +144,42 @@ input[type="text"], input[type="tel"], textarea { width: 100%; padding: 10px 12p
 .toast.show { opacity: 1; transform: translate(-50%, 0); }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; scroll-behavior: auto !important; } }
+
+/* ---------- Blog ---------- */
+[hidden] { display: none !important; }
+a.cart-btn { text-decoration: none; }
+.main-nav a[aria-current="page"] { border-color: var(--accent); }
+.blog-intro { padding: 36px 0 8px; }
+.blog-intro h1 { margin: 0 0 6px; font-family: var(--font-logo); font-size: clamp(1.8rem, 4vw, 2.4rem); color: var(--brand); }
+.post-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; padding-bottom: 20px; }
+.post-card .thumb { aspect-ratio: 16 / 9; }
+.post-meta { color: var(--muted); font-size: .82rem; }
+.post-link { text-decoration: none; }
+.post-link:hover { text-decoration: underline; }
+.read-more { margin-top: auto; padding-top: 8px; color: var(--brand); font-weight: 600; text-decoration: none; }
+.read-more:hover { text-decoration: underline; }
+
+.post { max-width: 720px; margin: 0 auto; padding: 28px 0 20px; }
+.back-link { display: inline-block; margin-bottom: 14px; color: var(--brand); font-weight: 600; text-decoration: none; }
+.back-link:hover { text-decoration: underline; }
+.post h1 { margin: 6px 0 16px; font-family: var(--font-logo); font-size: clamp(1.7rem, 4.5vw, 2.3rem); line-height: 1.2; color: var(--brand); }
+.post-hero { display: grid; place-items: center; aspect-ratio: 16 / 7; margin-bottom: 22px; border-radius: var(--radius); font-size: 4.5rem; }
+.prose { font-size: 1.05rem; line-height: 1.8; }
+.prose h2 { margin: 28px 0 8px; font-size: 1.35rem; }
+.prose p { margin: 0 0 14px; }
+.prose ul, .prose ol { margin: 0 0 16px; padding-left: 1.4em; }
+.prose li { margin-bottom: 6px; }
+.post-note { padding: 12px 16px; background: var(--accent-soft); border-radius: 10px; font-size: .97rem; }
+.post-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin: 26px 0; padding: 18px 20px; background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); }
+.post-cta p { margin: 0; font-weight: 600; }
+.post-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 10px; }
+.post-nav-link { display: flex; flex-direction: column; gap: 2px; padding: 12px 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; text-decoration: none; }
+.post-nav-link:nth-child(2) { text-align: right; }
+.post-nav-link small { color: var(--muted); }
+.post-nav-link span { font-weight: 600; font-size: .92rem; }
+.post-nav-link:hover { box-shadow: var(--shadow); }
+@media (max-width: 520px) { .post-nav { grid-template-columns: 1fr; } .post-nav-link:nth-child(2) { text-align: left; } }
+
+main:focus { outline: none; }
+.post-card h2 { margin: 0; font-size: 1rem; line-height: 1.35; font-family: var(--font); color: var(--ink); }
+.blog-main { min-height: 100vh; }   /* giữ chỗ để chân trang không nhảy khi danh sách bài được dựng */

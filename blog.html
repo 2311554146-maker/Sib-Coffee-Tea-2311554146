@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Blog – Sib Coffee and Tea</title>
+<meta name="description" content="Blog Sib Coffee and Tea: kiến thức cà phê, hướng dẫn pha chế và mẹo bảo quản. Website thực hành – không bán hàng thật.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%E2%98%95%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="practice-bar" role="note">⚠ <span>Website thực hành – không bán hàng thật</span></div>
+
+<header class="site-header">
+  <div class="container head-row">
+    <a class="logo" href="index.html" aria-label="Sib Coffee and Tea – trang chủ">Sib <i>Coffee and Tea</i></a>
+    <nav class="main-nav" aria-label="Menu chính">
+      <ul>
+        <li><a href="index.html#san-pham">Sản phẩm</a></li>
+        <li><a href="blog.html" aria-current="page">Blog</a></li>
+        <li><a href="index.html#chinh-sach">Chính sách</a></li>
+        <li><a href="index.html#lien-he">Liên hệ</a></li>
+      </ul>
+    </nav>
+    <a class="cart-btn" id="cartLink" href="index.html#gio-hang" aria-label="Giỏ hàng 0 sản phẩm">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.7 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></svg>
+      <span class="label">Giỏ hàng</span>
+      <span class="cart-count" id="cartCount">0</span>
+    </a>
+  </div>
+</header>
+
+<main id="top" class="blog-main" tabindex="-1">
+  <section class="blog-intro">
+    <div class="container">
+      <h1 id="blogTitle">Blog cà phê</h1>
+      <p class="sub" id="blogSub">Kiến thức, hướng dẫn pha chế và mẹo hay cho người yêu cà phê. Đây là bài viết mẫu của website thực hành.</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div id="listView">
+      <div class="filters" id="catFilters" role="group" aria-label="Lọc bài viết theo chủ đề"></div>
+      <div class="post-grid" id="postGrid"></div>
+    </div>
+    <article id="postView" class="post" hidden></article>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div>© 2026 Sib Coffee and Tea. <strong>Website thực hành – không bán hàng thật.</strong></div>
+    <div>Mọi bài viết, sản phẩm và thông tin trên trang này chỉ là nội dung mẫu.</div>
+  </div>
+</footer>
+
+<script src="posts.js"></script>
+<script src="blog.js"></script>
+</body>
+</html>
