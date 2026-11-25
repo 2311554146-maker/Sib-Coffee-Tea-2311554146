@@ -71,7 +71,7 @@
         <div class="policy"><h3>🚚 Giao hàng</h3><p>Nội thành TP.HCM giao trong 1–2 ngày. Phí giao hàng 25.000đ, miễn phí cho đơn từ 300.000đ.</p></div>
         <div class="policy"><h3>↩ Đổi trả trong 7 ngày</h3><p>Đổi trả trong 7 ngày kể từ khi nhận hàng nếu sản phẩm lỗi hoặc giao sai. Hạt cà phê đã mở túi không áp dụng.</p></div>
         <div class="policy"><h3>💵 Thanh toán COD</h3><p>Bạn trả tiền mặt cho nhân viên giao hàng khi nhận và kiểm tra hàng. Không có thanh toán online.</p></div>
-        <div class="policy"><h3>🔒 Thông tin của bạn</h3><p>Trang thực hành này không lưu hay gửi thông tin đặt hàng đi đâu.</p></div>
+        <div class="policy"><h3>🔒 Thông tin của bạn</h3><p>Khi đặt hàng, thông tin bạn nhập được lưu vào cơ sở dữ liệu của trang thực hành (Firebase) để chủ trang xem đơn. Vui lòng chỉ dùng dữ liệu giả.</p></div>
       </div>
     </div>
   </section>
@@ -92,7 +92,7 @@
 <footer class="site-footer">
   <div class="container">
     <div>© 2026 Sib Coffee and Tea. <strong>Website thực hành – không bán hàng thật.</strong></div>
-    <div>Mọi sản phẩm, giá, địa chỉ và số điện thoại trên trang này chỉ là dữ liệu mẫu.</div>
+    <div>Mọi sản phẩm, giá, địa chỉ và số điện thoại trên trang này chỉ là dữ liệu mẫu. Đơn đặt thử được lưu trên Firebase.</div>
   </div>
 </footer>
 
@@ -120,7 +120,7 @@
     <div class="warn">Website thực hành – không bán hàng thật. Vui lòng KHÔNG nhập thông tin cá nhân thật.</div>
 
     <label class="field-label" for="fName">Họ và tên</label>
-    <input type="text" id="fName" autocomplete="off" aria-describedby="eName">
+    <input type="text" id="fName" autocomplete="off" maxlength="100" aria-describedby="eName">
     <div class="err" id="eName" role="alert"></div>
 
     <label class="field-label" for="fPhone">Số điện thoại</label>
@@ -128,11 +128,11 @@
     <div class="err" id="ePhone" role="alert"></div>
 
     <label class="field-label" for="fAddr">Địa chỉ giao hàng</label>
-    <textarea id="fAddr" rows="2" autocomplete="off" aria-describedby="eAddr"></textarea>
+    <textarea id="fAddr" rows="2" autocomplete="off" maxlength="300" aria-describedby="eAddr"></textarea>
     <div class="err" id="eAddr" role="alert"></div>
 
     <label class="field-label" for="fNote">Ghi chú (không bắt buộc)</label>
-    <input type="text" id="fNote" autocomplete="off">
+    <input type="text" id="fNote" autocomplete="off" maxlength="500">
 
     <fieldset class="pay">
       <legend>Phương thức thanh toán</legend>
@@ -147,9 +147,11 @@
     </label>
     <div class="err" id="eConsent" role="alert"></div>
 
+    <div class="err" id="eSubmit" role="alert"></div>
+
     <div class="actions">
       <button type="button" class="btn ghost" id="coCancel">Quay lại</button>
-      <button type="submit" class="btn">Xác nhận đặt hàng</button>
+      <button type="submit" class="btn" id="submitOrder">Xác nhận đặt hàng</button>
     </div>
   </form>
 </dialog>
@@ -159,7 +161,7 @@
   <div class="dlg">
     <h2 id="doneTitle">🎉 Cảm ơn bạn đã đặt hàng!</h2>
     <p>Mã đơn hàng của bạn: <b id="orderId"></b></p>
-    <p>Đây là website thực hành nên đơn hàng <b>không được xử lý</b> và không có hàng nào được giao. Không có dữ liệu nào được gửi đi.</p>
+    <p>Đơn của bạn đã được ghi lại. Đây là website thực hành nên <b>không có hàng nào được giao</b> và không ai liên hệ với bạn.</p>
     <div class="actions"><button type="button" class="btn" id="doneClose">Tiếp tục xem sản phẩm</button></div>
   </div>
 </dialog>

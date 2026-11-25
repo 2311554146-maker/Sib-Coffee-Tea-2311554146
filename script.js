@@ -232,20 +232,111 @@ function setError(inputId, errorId, message) {
   return message === "";
 }
 
+/* Mã đơn dạng SIB-XXXXXXXX (8 ký tự A–Z, 0–9 ngẫu nhiên) – khớp quy tắc trong firestore.rules */
 function newOrderCode() {
-  return "SIB-" + Date.now().toString(36).toUpperCase().slice(-6);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const bytes = crypto.getRandomValues(new Uint8Array(8));
+  let code = "SIB-";
+  bytes.forEach((b) => { code += chars[b % chars.length]; });
+  return code;
 }
 
-$("#form").addEventListener("submit", (e) => {
+/* ---------- Firebase Firestore (nạp SDK từ CDN khi khách bấm đặt hàng) ---------- */
+// firebaseConfig là thông tin công khai của ứng dụng web, không phải mật khẩu.
+// Việc bảo vệ dữ liệu do firestore.rules đảm nhiệm (chỉ cho tạo đơn trong "donhang").
+const FIREBASE_VERSION = "12.6.0";
+const firebaseConfig = {
+  apiKey: "AIzaSyDMmepflj0zYdzTCRWUL9uDZC1aRRpY_Js",
+  authDomain: "sib-coffee-tea-231155414.firebaseapp.com",
+  projectId: "sib-coffee-tea-231155414",
+  appId: "1:324336824554:web:c65b6418d9f544cda22793"
+};
+const SEND_TIMEOUT_MS = 15000;
+
+let firebasePromise = null;
+function loadFirebase() {
+  if (!firebasePromise) {
+    const base = "https://www.gstatic.com/firebasejs/" + FIREBASE_VERSION + "/";
+    firebasePromise = Promise.all([
+      import(base + "firebase-app.js"),
+      import(base + "firebase-firestore.js")
+    ]).then(([appMod, fsMod]) => {
+      const app = appMod.initializeApp(firebaseConfig);
+      return { fs: fsMod, db: fsMod.getFirestore(app) };
+    });
+    firebasePromise.catch(() => { firebasePromise = null; });
+  }
+  return firebasePromise;
+}
+
+/* Ghi đơn vào collection "donhang"; mã tài liệu = mã đơn (không thể ghi đè đơn cũ). */
+async function saveOrder(order) {
+  const { fs, db } = await loadFirebase();
+  const ref = fs.doc(db, "donhang", order.maDon);
+  const data = Object.assign({}, order, { thoiGian: fs.serverTimestamp() });
+  let timer;
+  const timeout = new Promise((_, reject) => {
+    timer = setTimeout(() => reject({ code: "timeout" }), SEND_TIMEOUT_MS);
+  });
+  try {
+    await Promise.race([fs.setDoc(ref, data), timeout]);
+  } catch (err) {
+    // Hủy kết nối để mọi lần ghi còn treo không tự gửi lại sau này
+    try { await fs.terminate(db); } catch (e) { /* bỏ qua */ }
+    firebasePromise = null;
+    throw err;
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+function buildOrder(code, name, phone, address, note) {
+  const t = calcTotals();
+  return {
+    maDon: code,
+    khachHang: { hoTen: name, soDienThoai: phone, diaChi: address, ghiChu: note },
+    sanPham: Object.keys(cart).map((id) => {
+      const p = findProduct(id);
+      return { ma: String(p.id), ten: p.name, gia: p.price, soLuong: cart[id] };
+    }),
+    tamTinh: t.subtotal,
+    phiGiao: t.shipping,
+    tongTien: t.total,
+    thanhToan: "COD",
+    trangThai: "moi"
+  };
+}
+
+function sendErrorMessage(err) {
+  const code = err && err.code ? String(err.code) : "";
+  if (code.includes("permission-denied")) {
+    return "Đơn hàng chưa được chấp nhận vì dữ liệu chưa hợp lệ. Vui lòng kiểm tra lại thông tin rồi thử lại.";
+  }
+  if (code === "timeout" || code.includes("unavailable") || code.includes("deadline")) {
+    return "Không kết nối được tới máy chủ. Vui lòng kiểm tra mạng rồi bấm đặt hàng lại.";
+  }
+  if (!code) {
+    return "Không tải được thành phần lưu đơn hàng. Vui lòng kiểm tra mạng rồi thử lại.";
+  }
+  return "Có lỗi khi gửi đơn hàng. Giỏ hàng của bạn vẫn còn, vui lòng thử lại sau.";
+}
+
+let sending = false;   // chặn bấm đặt hàng nhiều lần khi đang gửi
+
+$("#form").addEventListener("submit", async (e) => {
   e.preventDefault();
+  if (sending) return;
   const name = $("#fName").value.trim();
   const phone = $("#fPhone").value.replace(/[\s.\-]/g, "");
   const address = $("#fAddr").value.trim();
+  const note = $("#fNote").value.trim();
+  $("#eSubmit").textContent = "";
+  $("#fNote").setAttribute("aria-invalid", "false");
 
   const results = [
-    setError("fName", "eName", name.length < 2 ? "Vui lòng nhập họ và tên." : ""),
+    setError("fName", "eName", name.length < 2 ? "Vui lòng nhập họ và tên." : (name.length > 100 ? "Họ và tên tối đa 100 ký tự." : "")),
     setError("fPhone", "ePhone", PHONE_RE.test(phone) ? "" : "Số điện thoại chưa hợp lệ (ví dụ: 0900000000)."),
-    setError("fAddr", "eAddr", address.length < 8 ? "Vui lòng nhập địa chỉ giao hàng đầy đủ." : ""),
+    setError("fAddr", "eAddr", address.length < 8 ? "Vui lòng nhập địa chỉ giao hàng đầy đủ." : (address.length > 300 ? "Địa chỉ tối đa 300 ký tự." : "")),
     setError("fConsent", "eConsent", $("#fConsent").checked ? "" : "Bạn cần đồng ý để tiếp tục đặt hàng.")
   ];
   if (!results.every(Boolean)) {
@@ -255,8 +346,31 @@ $("#form").addEventListener("submit", (e) => {
     return;
   }
 
-  // Chưa gửi đơn đi đâu: chỉ hiện mã đơn, lời cảm ơn và xóa giỏ.
-  $("#orderId").textContent = newOrderCode();
+  if (note.length > 500) {
+    setError("fNote", "eSubmit", "Ghi chú tối đa 500 ký tự.");
+    $("#fNote").focus();
+    return;
+  }
+
+  // Ghi đơn vào Firestore. Chỉ khi ghi thành công mới hiện mã đơn và xóa giỏ.
+  const code = newOrderCode();
+  const order = buildOrder(code, name, phone, address, note);
+  const submitBtn = $("#submitOrder");
+  sending = true;
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Đang gửi đơn...";
+  try {
+    await saveOrder(order);
+  } catch (err) {
+    $("#eSubmit").textContent = sendErrorMessage(err);
+    return;
+  } finally {
+    sending = false;
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Xác nhận đặt hàng";
+  }
+
+  $("#orderId").textContent = code;
   cart = {};
   saveCart();
   renderCart();

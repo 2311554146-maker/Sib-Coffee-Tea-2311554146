@@ -17,3 +17,6 @@ desktop.ini
 # Khác
 node_modules/
 *.log
+
+# Nhật ký của Firebase CLI
+firebase-debug.log

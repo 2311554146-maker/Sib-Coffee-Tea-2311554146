@@ -1,0 +1,90 @@
+rules_version = '2';
+
+// Quy tắc bảo mật Firestore – Sib Coffee and Tea (website thực hành)
+// - Chỉ cho TẠO tài liệu mới trong collection "donhang".
+// - Cấm mọi thao tác ĐỌC, SỬA, XÓA từ trình duyệt.
+// - Mã tài liệu phải bằng mã đơn (maDon), nên không thể ghi đè đơn đã có.
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function laChuoi(v, toiThieu, toiDa) {
+      return v is string && v.size() >= toiThieu && v.size() <= toiDa;
+    }
+
+    function laSoKhongAm(v) {
+      return v is number && v >= 0 && v <= 1000000000;
+    }
+
+    function monHopLe(m) {
+      return m is map
+        && m.keys().hasOnly(['ma', 'ten', 'gia', 'soLuong'])
+        && m.keys().hasAll(['ma', 'ten', 'gia', 'soLuong'])
+        && laChuoi(m.ma, 1, 40)
+        && laChuoi(m.ten, 1, 120)
+        && laSoKhongAm(m.gia)
+        && m.soLuong is int && m.soLuong >= 1 && m.soLuong <= 99;
+    }
+
+    // Luật Firestore không có vòng lặp, nên kiểm tra từng vị trí (tối đa 20 món).
+    function danhSachMonHopLe(ds) {
+      return ds is list && ds.size() >= 1 && ds.size() <= 20
+        && (ds.size() <= 0  || monHopLe(ds[0]))
+        && (ds.size() <= 1  || monHopLe(ds[1]))
+        && (ds.size() <= 2  || monHopLe(ds[2]))
+        && (ds.size() <= 3  || monHopLe(ds[3]))
+        && (ds.size() <= 4  || monHopLe(ds[4]))
+        && (ds.size() <= 5  || monHopLe(ds[5]))
+        && (ds.size() <= 6  || monHopLe(ds[6]))
+        && (ds.size() <= 7  || monHopLe(ds[7]))
+        && (ds.size() <= 8  || monHopLe(ds[8]))
+        && (ds.size() <= 9  || monHopLe(ds[9]))
+        && (ds.size() <= 10 || monHopLe(ds[10]))
+        && (ds.size() <= 11 || monHopLe(ds[11]))
+        && (ds.size() <= 12 || monHopLe(ds[12]))
+        && (ds.size() <= 13 || monHopLe(ds[13]))
+        && (ds.size() <= 14 || monHopLe(ds[14]))
+        && (ds.size() <= 15 || monHopLe(ds[15]))
+        && (ds.size() <= 16 || monHopLe(ds[16]))
+        && (ds.size() <= 17 || monHopLe(ds[17]))
+        && (ds.size() <= 18 || monHopLe(ds[18]))
+        && (ds.size() <= 19 || monHopLe(ds[19]));
+    }
+
+    function khachHangHopLe(k) {
+      return k is map
+        && k.keys().hasOnly(['hoTen', 'soDienThoai', 'diaChi', 'ghiChu'])
+        && k.keys().hasAll(['hoTen', 'soDienThoai', 'diaChi', 'ghiChu'])
+        && laChuoi(k.hoTen, 2, 100)
+        && laChuoi(k.soDienThoai, 10, 12)
+        && k.soDienThoai.matches('^(0|\\+84)(3|5|7|8|9)[0-9]{8}$')
+        && laChuoi(k.diaChi, 8, 300)
+        && laChuoi(k.ghiChu, 0, 500);
+    }
+
+    function donHangHopLe(d, maTaiLieu) {
+      return d.keys().hasOnly(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
+        && d.keys().hasAll(['maDon', 'khachHang', 'sanPham', 'tamTinh', 'phiGiao', 'tongTien', 'thanhToan', 'trangThai', 'thoiGian'])
+        && d.maDon is string && d.maDon == maTaiLieu
+        && d.maDon.matches('^SIB-[A-Z0-9]{4,12}$')
+        && khachHangHopLe(d.khachHang)
+        && danhSachMonHopLe(d.sanPham)
+        && laSoKhongAm(d.tamTinh)
+        && laSoKhongAm(d.phiGiao)
+        && laSoKhongAm(d.tongTien)
+        && d.tongTien == d.tamTinh + d.phiGiao
+        && d.thanhToan == 'COD'
+        && d.trangThai == 'moi'
+        && d.thoiGian == request.time;
+    }
+
+    match /donhang/{maDon} {
+      allow create: if donHangHopLe(request.resource.data, maDon);
+      allow get, list, update, delete: if false;
+    }
+
+    // Mọi nơi khác: cấm hoàn toàn.
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

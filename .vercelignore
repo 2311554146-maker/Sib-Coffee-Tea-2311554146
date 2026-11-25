@@ -1,3 +1,6 @@
 .env*
 .vercel
 .claude
+firebase.json
+firestore.rules
+firebase-debug.log
